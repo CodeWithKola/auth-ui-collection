@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Account created successfully - ForgePath"
+    />
+    <title>Account Created -</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      @keyframes gradient {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+      .animate-gradient {
+        background-size: 200% 200%;
+        animation: gradient 8s ease infinite;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-gray-50">
+    <main class="min-h-screen flex items-center justify-center p-4">
+      <div
+        class="max-w-7xl w-full mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col lg:flex-row"
+      >
+        <div class="w-full lg:w-1/2 p-8 lg:p-12">
+          <nav class="mb-8">
+            <a href="/" class="flex items-center gap-3">
+              <div
+                class="w-8 h-8 rounded-lg animate-gradient bg-gradient-to-r from-blue-600 to-slate-700"
+              ></div>
+              <span class="font-bold text-xl text-gray-900">ForgePath</span>
+            </a>
+          </nav>
+
+          <div class="mb-8">
+            <div class="flex items-center gap-3 mb-6">
+              <div
+                class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center"
+              >
+                <svg
+                  class="w-6 h-6 text-green-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              </div>
+            </div>
+            <h1 class="text-4xl font-bold mb-3 text-gray-900">
+              Welcome aboard!
+            </h1>
+            <p class="text-lg text-gray-600">
+              Your account has been successfully created. Please check your
+              email to verify your account.
+            </p>
+          </div>
+
+          <!-- Email verification info -->
+          <div
+            class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg mb-8"
+          >
+            <div class="flex items-center">
+              <div class="flex-shrink-0">
+                <svg
+                  class="h-5 w-5 text-blue-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
+              <div class="ml-3">
+                <p class="text-sm text-blue-700">
+                  We've sent a verification email to your inbox. Please click
+                  the link in the email to verify your account.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <a
+              href="index.html"
+              class="w-full bg-blue-600 text-white rounded-xl py-3 px-4 font-medium hover:bg-blue-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 flex items-center justify-center gap-2"
+            >
+              Go to dashboard
+              <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </a>
+
+            <button
+              onclick="resendVerification()"
+              class="w-full bg-white text-gray-700 border-2 border-gray-200 rounded-xl py-3 px-4 font-medium hover:bg-gray-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 flex items-center justify-center gap-2"
+            >
+              Resend verification email
+              <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <div class="mt-8 border-t border-gray-200 pt-8">
+            <p class="text-sm text-gray-500 text-center">
+              Need help? Contact your system administrator or
+              <a href="#" class="text-blue-600 hover:text-blue-700"
+                >contact support</a
+              >
+            </p>
+          </div>
+        </div>
+
+        <div class="w-full lg:w-1/2 hidden lg:block relative">
+          <div
+            class="absolute inset-0 animate-gradient bg-gradient-to-br from-blue-600 via-slate-700 to-gray-900"
+          >
+            <div class="absolute inset-0 bg-black/20">
+              <div
+                class="absolute inset-0 flex flex-col justify-end p-12 text-white"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="64"
+                  height="64"
+                  viewBox="0 0 48 48"
+                >
+                  <path fill="#607D8B" d="M4 20v20h40V12l-10 8V12l-10 8V20z" />
+                  <path
+                    fill="#B0BEC5"
+                    d="M10 30h4v6h-4zm8 0h4v6h-4zm8 0h4v6h-4zm8 0h4v6h-4z"
+                  />
+                </svg>
+
+                <div class="space-y-4 mb-12">
+                  <h2 class="text-4xl font-bold leading-tight">
+                    Get started with ForgePath
+                  </h2>
+                  <p class="text-xl text-white/90">
+                    Connect, collaborate, and grow with industry leaders
+                  </p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="bg-white/10 backdrop-blur-lg rounded-xl p-4">
+                    <div class="flex items-center gap-3 mb-2">
+                      <svg
+                        class="w-5 h-5 text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                        />
+                      </svg>
+                      <span class="font-medium">Network</span>
+                    </div>
+                    <p class="text-sm text-white/80">
+                      Connect with industry professionals
+                    </p>
+                  </div>
+                  <div class="bg-white/10 backdrop-blur-lg rounded-xl p-4">
+                    <div class="flex items-center gap-3 mb-2">
+                      <svg
+                        class="w-5 h-5 text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                        />
+                      </svg>
+                      <span class="font-medium">Innovate</span>
+                    </div>
+                    <p class="text-sm text-white/80">
+                      Access cutting-edge solutions
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      function resendVerification() {
+        const button = document.querySelector("button");
+        const originalText = button.innerHTML;
+
+        button.disabled = true;
+        button.innerHTML = "Sending...";
+
+        setTimeout(() => {
+          button.innerHTML = "Verification email sent!";
+          setTimeout(() => {
+            button.disabled = false;
+            button.innerHTML = originalText;
+          }, 3000);
+        }, 1000);
+      }
+    </script>
+  </body>
+</html>
