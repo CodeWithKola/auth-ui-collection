@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Join ForgePath - The leading platform for industrial professionals"
+    />
+    <title>ForgePath - Create Your Account</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      @keyframes gradient {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+      .animate-gradient {
+        background-size: 200% 200%;
+        animation: gradient 8s ease infinite;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-gray-50">
+    <main class="min-h-screen flex items-center justify-center p-4">
+      <div
+        class="max-w-7xl w-full mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col lg:flex-row"
+      >
+        <div class="w-full lg:w-1/2 p-8 lg:p-12">
+          <nav class="mb-8">
+            <a href="/" class="flex items-center gap-3">
+              <div
+                class="w-8 h-8 rounded-lg animate-gradient bg-gradient-to-r from-blue-600 to-slate-700"
+              ></div>
+              <span class="font-bold text-xl text-gray-900">ForgePath</span>
+            </a>
+          </nav>
+
+          <div class="mb-8">
+            <h1 class="text-4xl font-bold mb-3 text-gray-900">
+              Join the Industrial Revolution 4.0
+            </h1>
+            <p class="text-lg text-gray-600">
+              Connect with industry leaders, access real-time data, and optimize
+              your operations.
+            </p>
+          </div>
+
+          <div class="space-y-4 mb-8">
+            <button
+              class="w-full flex items-center justify-center gap-3 bg-white border-2 border-gray-200 rounded-xl py-3 px-4 text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 48 48"
+              >
+                <path fill="#F25022" d="M6 6h16v16H6z" />
+                <path fill="#7FBA00" d="M26 6h16v16H26z" />
+                <path fill="#00A4EF" d="M6 26h16v16H6z" />
+                <path fill="#FFB900" d="M26 26h16v16H26z" />
+              </svg>
+              <span class="font-medium">Sign up with Microsoft</span>
+            </button>
+
+            <button
+              class="w-full flex items-center justify-center gap-3 bg-blue-700 text-white rounded-xl py-3 px-4 hover:bg-blue-800 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            >
+              <svg
+                class="w-6 h-6"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+                />
+                <rect x="2" y="9" width="4" height="12" />
+                <circle cx="4" cy="4" r="2" />
+              </svg>
+              <span class="font-medium">Sign up with LinkedIn</span>
+            </button>
+          </div>
+
+          <div class="relative my-8">
+            <div class="absolute inset-0 flex items-center">
+              <div class="w-full border-t border-gray-200"></div>
+            </div>
+            <div class="relative flex justify-center">
+              <span class="px-4 bg-white text-sm text-gray-500"
+                >or continue with email</span
+              >
+            </div>
+          </div>
+
+          <form action="signup-success.html" class="space-y-6" novalidate>
+            <div class="space-y-4">
+              <div>
+                <label
+                  for="name"
+                  class="block text-sm font-medium mb-2 text-gray-700"
+                  >Full name</label
+                >
+                <div class="relative rounded-xl shadow-sm">
+                  <div
+                    class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400"
+                  >
+                    <svg
+                      class="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"
+                      />
+                    </svg>
+                  </div>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    autocomplete="name"
+                    required
+                    class="block w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-400"
+                    placeholder="John Smith"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  for="company"
+                  class="block text-sm font-medium mb-2 text-gray-700"
+                  >Company name</label
+                >
+                <div class="relative rounded-xl shadow-sm">
+                  <div
+                    class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400"
+                  >
+                    <svg
+                      class="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                      />
+                    </svg>
+                  </div>
+                  <input
+                    type="text"
+                    id="company"
+                    name="company"
+                    autocomplete="organization"
+                    required
+                    class="block w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-400"
+                    placeholder="Industrial Solutions Inc."
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  for="email"
+                  class="block text-sm font-medium mb-2 text-gray-700"
+                  >Work email</label
+                >
+                <div class="relative rounded-xl shadow-sm">
+                  <div
+                    class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400"
+                  >
+                    <svg
+                      class="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                      />
+                    </svg>
+                  </div>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    autocomplete="email"
+                    required
+                    class="block w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-400"
+                    placeholder="john@company.com"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  for="password"
+                  class="block text-sm font-medium mb-2 text-gray-700"
+                  >Password</label
+                >
+                <div class="relative rounded-xl shadow-sm">
+                  <div
+                    class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400"
+                  >
+                    <svg
+                      class="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                      />
+                    </svg>
+                  </div>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    autocomplete="new-password"
+                    required
+                    minlength="8"
+                    class="block w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-400"
+                    placeholder="Minimum 8 characters"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-center">
+              <input
+                type="checkbox"
+                id="terms"
+                name="terms"
+                required
+                class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              />
+              <label for="terms" class="ml-2 block text-sm text-gray-600">
+                I agree to the
+                <a href="#" class="text-blue-600 hover:text-blue-700"
+                  >Terms of Service</a
+                >
+                and
+                <a href="#" class="text-blue-600 hover:text-blue-700"
+                  >Privacy Policy</a
+                >
+              </label>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full bg-blue-600 text-white rounded-xl py-3 px-4 font-medium hover:bg-blue-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 flex items-center justify-center gap-2"
+            >
+              Create account
+              <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </button>
+          </form>
+
+          <p class="mt-8 text-center text-gray-600">
+            Already have an account?
+            <a
+              href="index.html"
+              class="text-blue-600 hover:text-blue-700 font-medium"
+              >Sign in</a
+            >
+          </p>
+        </div>
+
+        <div class="w-full lg:w-1/2 hidden lg:block relative">
+          <div
+            class="absolute inset-0 animate-gradient bg-gradient-to-br from-blue-600 via-slate-700 to-gray-900"
+          >
+            <div class="absolute inset-0 bg-black/20">
+              <div
+                class="absolute inset-0 flex flex-col justify-end p-12 text-white"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="64"
+                  height="64"
+                  viewBox="0 0 48 48"
+                >
+                  <path fill="#607D8B" d="M4 20v20h40V12l-10 8V12l-10 8V20z" />
+                  <path
+                    fill="#B0BEC5"
+                    d="M10 30h4v6h-4zm8 0h4v6h-4zm8 0h4v6h-4zm8 0h4v6h-4z"
+                  />
+                </svg>
+
+                <div class="space-y-4 mb-12">
+                  <h2 class="text-4xl font-bold leading-tight">
+                    Transform your industrial operations
+                  </h2>
+                  <p class="text-xl text-white/90">
+                    Join thousands of companies optimizing their industrial
+                    processes
+                  </p>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4">
+                  <div class="bg-white/10 backdrop-blur-lg rounded-xl p-4">
+                    <div class="text-3xl font-bold mb-1">5K+</div>
+                    <div class="text-white/90">Companies</div>
+                  </div>
+                  <div class="bg-white/10 backdrop-blur-lg rounded-xl p-4">
+                    <div class="text-3xl font-bold mb-1">50K+</div>
+                    <div class="text-white/90">Active Users</div>
+                  </div>
+                  <div class="bg-white/10 backdrop-blur-lg rounded-xl p-4">
+                    <div class="text-3xl font-bold mb-1">90%</div>
+                    <div class="text-white/90">Cost Savings</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
