@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AuroVista - Create Account</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container-fluid min-vh-100">
+      <div class="row min-vh-100">
+        <!-- Sign Up Form Section -->
+        <div
+          class="col-lg-6 d-flex align-items-center justify-content-center bg-light py-5"
+        >
+          <div class="w-75">
+            <div class="text-success mb-4 d-flex align-items-center">
+              <i class="bi bi-brightness-alt-high-fill fs-4 me-2"></i>
+              <h1 class="display-5 fw-bold m-0">AuroVista</h1>
+            </div>
+
+            <h2 class="h3 mb-2">Create your account</h2>
+            <p class="text-muted mb-4">
+              Join AuroVista to streamline your aviation operations
+            </p>
+
+            <div class="mb-4">
+              <div class="d-grid gap-2">
+                <button
+                  class="btn btn-outline-secondary d-flex align-items-center justify-content-center gap-2"
+                >
+                  <i class="bi bi-google"></i>
+                  Continue with Google
+                </button>
+                <button
+                  class="btn btn-outline-secondary d-flex align-items-center justify-content-center gap-2"
+                >
+                  <i class="bi bi-microsoft"></i>
+                  Continue with Microsoft
+                </button>
+              </div>
+
+              <div class="d-flex align-items-center my-4">
+                <hr class="flex-grow-1" />
+                <span class="px-3 text-muted small"
+                  >Or continue with email</span
+                >
+                <hr class="flex-grow-1" />
+              </div>
+            </div>
+
+            <form id="signUpForm" novalidate>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="firstName" class="form-label">First name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="firstName"
+                    placeholder="John"
+                    required
+                  />
+                  <div class="invalid-feedback">First name is required</div>
+                </div>
+                <div class="col-md-6">
+                  <label for="lastName" class="form-label">Last name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="lastName"
+                    placeholder="Doe"
+                    required
+                  />
+                  <div class="invalid-feedback">Last name is required</div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light">
+                    <i class="bi bi-envelope"></i>
+                  </span>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    placeholder="Your email"
+                    required
+                  />
+                  <div class="invalid-feedback">
+                    Please enter a valid email address
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light">
+                    <i class="bi bi-lock"></i>
+                  </span>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    placeholder="Create a password"
+                    required
+                  />
+                  <button
+                    class="btn btn-outline-secondary"
+                    type="button"
+                    id="togglePassword"
+                  >
+                    <i class="bi bi-eye"></i>
+                  </button>
+                </div>
+                <div class="password-strength mt-2" id="passwordStrength">
+                  <div class="progress" style="height: 5px">
+                    <div
+                      class="progress-bar bg-danger"
+                      role="progressbar"
+                      style="width: 0%"
+                    ></div>
+                  </div>
+                  <small class="text-muted mt-1 d-block"
+                    >Password strength:
+                    <span id="strengthText">Very weak</span></small
+                  >
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="terms"
+                    required
+                  />
+                  <label class="form-check-label small" for="terms">
+                    I agree to AuroVista's
+                    <a href="#" class="text-success">Terms of Service</a> and
+                    <a href="#" class="text-success">Privacy Policy</a>
+                  </label>
+                  <div class="invalid-feedback">
+                    You must agree to the terms to continue
+                  </div>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                class="btn btn-success w-100 mb-3"
+                id="submitBtn"
+              >
+                <span id="buttonText">Create Account</span>
+                <span
+                  id="spinnerIcon"
+                  class="spinner-border spinner-border-sm ms-2 d-none"
+                  role="status"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </span>
+              </button>
+
+              <div class="text-center">
+                <p class="text-muted mb-0">
+                  Already have an account?
+                  <a href="index.html" class="text-success text-decoration-none"
+                    >Sign in</a
+                  >
+                </p>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Image Section -->
+        <div class="col-lg-6 d-none d-lg-block position-relative">
+          <img
+            src="assets/images/welcome-screen.jpg"
+            alt="Aviation background"
+            class="w-100 h-100 object-fit-cover"
+          />
+          <div
+            class="position-absolute top-0 start-0 w-100 h-100 bg-success bg-opacity-75 d-flex flex-column justify-content-between p-5 text-white"
+          >
+            <div class="text-end">
+              <p class="mb-0">
+                <a href="#" class="text-white text-decoration-none me-3"
+                  >Help</a
+                >
+                <a href="#" class="text-white text-decoration-none">Contact</a>
+              </p>
+            </div>
+            <div>
+              <div class="mb-4">
+                <h3 class="h4 mb-3">Why choose AuroVista?</h3>
+                <ul class="list-unstyled">
+                  <li class="mb-3 d-flex align-items-center">
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    Streamlined aviation operations management
+                  </li>
+                  <li class="mb-3 d-flex align-items-center">
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    Real-time flight tracking and updates
+                  </li>
+                  <li class="mb-3 d-flex align-items-center">
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    Comprehensive booking management system
+                  </li>
+                  <li class="d-flex align-items-center">
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    24/7 customer support
+                  </li>
+                </ul>
+              </div>
+              <div class="border-start border-3 ps-3">
+                <p class="fs-5 mb-0">
+                  "Since implementing AuroVista, we've seen a 40% increase in
+                  operational efficiency and significant cost savings."
+                </p>
+                <p class="mb-0 mt-2">
+                  <strong>Sarah Johnson</strong><br />
+                  Operations Director, SkyWay Airlines
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("signUpForm");
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+        const togglePasswordBtn = document.getElementById("togglePassword");
+        const submitBtn = document.getElementById("submitBtn");
+        const buttonText = document.getElementById("buttonText");
+        const spinnerIcon = document.getElementById("spinnerIcon");
+        const strengthBar = document.querySelector(".progress-bar");
+        const strengthText = document.getElementById("strengthText");
+
+        // Toggle password visibility
+        togglePasswordBtn.addEventListener("click", function () {
+          const type =
+            passwordInput.getAttribute("type") === "password"
+              ? "text"
+              : "password";
+          passwordInput.setAttribute("type", type);
+          this.querySelector("i").classList.toggle("bi-eye");
+          this.querySelector("i").classList.toggle("bi-eye-slash");
+        });
+
+        // Email validation
+        function isEmailValid(email) {
+          const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+          return emailPattern.test(email);
+        }
+
+        // Password strength checker
+        function checkPasswordStrength(password) {
+          let strength = 0;
+
+          if (password.length >= 8) strength += 20;
+          if (password.match(/[A-Z]/)) strength += 20;
+          if (password.match(/[a-z]/)) strength += 20;
+          if (password.match(/[0-9]/)) strength += 20;
+          if (password.match(/[^A-Za-z0-9]/)) strength += 20;
+
+          strengthBar.style.width = strength + "%";
+
+          if (strength <= 20) {
+            strengthBar.className = "progress-bar bg-danger";
+            strengthText.textContent = "Very weak";
+          } else if (strength <= 40) {
+            strengthBar.className = "progress-bar bg-warning";
+            strengthText.textContent = "Weak";
+          } else if (strength <= 60) {
+            strengthBar.className = "progress-bar bg-info";
+            strengthText.textContent = "Fair";
+          } else if (strength <= 80) {
+            strengthBar.className = "progress-bar bg-primary";
+            strengthText.textContent = "Good";
+          } else {
+            strengthBar.className = "progress-bar bg-success";
+            strengthText.textContent = "Strong";
+          }
+
+          return strength === 100;
+        }
+
+        // Form validation
+        function validateForm() {
+          let isValid = true;
+          const inputs = form.querySelectorAll("input[required]");
+
+          inputs.forEach((input) => {
+            if (!input.value) {
+              input.classList.add("is-invalid");
+              isValid = false;
+            } else {
+              input.classList.remove("is-invalid");
+            }
+          });
+
+          if (!isEmailValid(emailInput.value)) {
+            emailInput.classList.add("is-invalid");
+            isValid = false;
+          }
+
+          if (!checkPasswordStrength(passwordInput.value)) {
+            passwordInput.classList.add("is-invalid");
+            isValid = false;
+          }
+
+          return isValid;
+        }
+
+        // Password strength checker
+        passwordInput.addEventListener("input", function () {
+          checkPasswordStrength(this.value);
+        });
+
+        // Form submission
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          if (!validateForm()) {
+            return;
+          }
+
+          // Show loading state
+          submitBtn.disabled = true;
+          buttonText.textContent = "Creating Account...";
+          spinnerIcon.classList.remove("d-none");
+
+          setTimeout(() => {
+            window.location.href = "email-verification.html";
+          }, 1500);
+        });
+      });
+    </script>
+  </body>
+</html>

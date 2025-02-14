@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AuroVista - Verify Email</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-light">
+    <div
+      class="container-fluid min-vh-100 d-flex align-items-center justify-content-center py-5"
+    >
+      <div class="card shadow-sm" style="max-width: 440px">
+        <div class="card-body p-4 text-center">
+          <div
+            class="text-success mb-4 d-flex align-items-center justify-content-center"
+          >
+            <i class="bi bi-brightness-alt-high-fill fs-4 me-2"></i>
+            <h1 class="display-6 fw-bold m-0">AuroVista</h1>
+          </div>
+
+          <div class="text-success mb-4">
+            <div
+              class="d-inline-block p-3 bg-success bg-opacity-10 rounded-circle"
+            >
+              <i class="bi bi-envelope-check fs-1"></i>
+            </div>
+          </div>
+
+          <h2 class="h3 mb-3">Verify your email</h2>
+          <p class="text-muted mb-4">
+            We've sent a verification code to<br />
+            <strong id="userEmail">j*****@example.com</strong>
+          </p>
+
+          <form id="verificationForm" class="mb-4">
+            <div class="mb-4">
+              <div class="d-flex gap-2 justify-content-center">
+                <input
+                  type="text"
+                  class="form-control text-center fw-bold"
+                  maxlength="1"
+                  style="width: 50px; height: 50px"
+                  required
+                />
+                <input
+                  type="text"
+                  class="form-control text-center fw-bold"
+                  maxlength="1"
+                  style="width: 50px; height: 50px"
+                  required
+                />
+                <input
+                  type="text"
+                  class="form-control text-center fw-bold"
+                  maxlength="1"
+                  style="width: 50px; height: 50px"
+                  required
+                />
+                <input
+                  type="text"
+                  class="form-control text-center fw-bold"
+                  maxlength="1"
+                  style="width: 50px; height: 50px"
+                  required
+                />
+                <input
+                  type="text"
+                  class="form-control text-center fw-bold"
+                  maxlength="1"
+                  style="width: 50px; height: 50px"
+                  required
+                />
+                <input
+                  type="text"
+                  class="form-control text-center fw-bold"
+                  maxlength="1"
+                  style="width: 50px; height: 50px"
+                  required
+                />
+              </div>
+              <div class="invalid-feedback">
+                Please enter a valid verification code
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              class="btn btn-success w-100 mb-3"
+              id="submitBtn"
+            >
+              <span id="buttonText">Verify Email</span>
+              <span
+                id="spinnerIcon"
+                class="spinner-border spinner-border-sm ms-2 d-none"
+                role="status"
+              >
+                <span class="visually-hidden">Loading...</span>
+              </span>
+            </button>
+          </form>
+
+          <div class="alert alert-light border py-2 mb-4">
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center">
+                <i class="bi bi-clock text-muted me-2"></i>
+                <small class="text-muted"
+                  >Code expires in <span id="timer">4:59</span></small
+                >
+              </div>
+              <button
+                class="btn btn-link btn-sm text-success text-decoration-none p-0"
+                id="resendBtn"
+              >
+                Resend code
+              </button>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <p class="small text-muted mb-0">
+              Wrong email address?
+              <a
+                href="#"
+                class="text-success text-decoration-none"
+                id="changeEmailBtn"
+                >Change email</a
+              >
+            </p>
+          </div>
+
+          <hr class="my-4" />
+
+          <div class="text-center">
+            <p class="small text-muted mb-2">Need help?</p>
+            <div class="d-flex justify-content-center gap-3">
+              <a href="#" class="text-success text-decoration-none small">
+                <i class="bi bi-question-circle me-1"></i>
+                Support
+              </a>
+              <a href="#" class="text-success text-decoration-none small">
+                <i class="bi bi-envelope me-1"></i>
+                Contact us
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("verificationForm");
+        const inputs = form.querySelectorAll("input");
+        const submitBtn = document.getElementById("submitBtn");
+        const buttonText = document.getElementById("buttonText");
+        const spinnerIcon = document.getElementById("spinnerIcon");
+        const resendBtn = document.getElementById("resendBtn");
+        const timerSpan = document.getElementById("timer");
+
+        // Timer functionality
+        let timeLeft = 299; // 4:59 in seconds
+        const timer = setInterval(() => {
+          const minutes = Math.floor(timeLeft / 60);
+          const seconds = timeLeft % 60;
+          timerSpan.textContent = `${minutes}:${seconds
+            .toString()
+            .padStart(2, "0")}`;
+
+          if (timeLeft <= 0) {
+            clearInterval(timer);
+            timerSpan.textContent = "0:00";
+            resendBtn.disabled = false;
+          }
+          timeLeft--;
+        }, 1000);
+
+        // Input handling
+        inputs.forEach((input, index) => {
+          input.addEventListener("keyup", function (e) {
+            if (e.key === "Backspace" || e.key === "Delete") {
+              if (index > 0 && !this.value) {
+                inputs[index - 1].focus();
+              }
+            } else if (this.value) {
+              if (index < inputs.length - 1) {
+                inputs[index + 1].focus();
+              }
+            }
+          });
+
+          input.addEventListener("keypress", function (e) {
+            if (!/^\d$/.test(e.key)) {
+              e.preventDefault();
+            }
+          });
+
+          input.addEventListener("paste", function (e) {
+            e.preventDefault();
+            const paste = e.clipboardData.getData("text");
+            const numbers = paste.match(/\d/g);
+
+            if (numbers) {
+              numbers.forEach((number, i) => {
+                if (i < inputs.length) {
+                  inputs[i].value = number;
+                }
+              });
+              if (inputs.length > 0) {
+                inputs[Math.min(numbers.length, inputs.length - 1)].focus();
+              }
+            }
+          });
+        });
+
+        // Form submission
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const code = Array.from(inputs)
+            .map((input) => input.value)
+            .join("");
+          if (code.length !== 6) {
+            return;
+          }
+
+          // Show loading state
+          submitBtn.disabled = true;
+          buttonText.textContent = "Verifying...";
+          spinnerIcon.classList.remove("d-none");
+
+          setTimeout(() => {
+            window.location.href = "index.html";
+          }, 1500);
+        });
+
+        // Resend code
+        resendBtn.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          if (this.disabled) return;
+
+          this.disabled = true;
+          const originalText = this.textContent;
+          this.innerHTML =
+            '<span class="spinner-border spinner-border-sm me-1"></span>Sending...';
+
+          // Simulate API call
+          setTimeout(() => {
+            this.textContent = "Code sent!";
+
+            setTimeout(() => {
+              this.textContent = originalText;
+              timeLeft = 299;
+              this.disabled = true;
+            }, 2000);
+          }, 1500);
+        });
+      });
+    </script>
+  </body>
+</html>

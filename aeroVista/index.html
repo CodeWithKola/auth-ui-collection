@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AuroVista - Sign In</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container-fluid min-vh-100">
+      <div class="row min-vh-100">
+        <!-- Sign In Form Section -->
+        <div
+          class="col-lg-6 d-flex align-items-center justify-content-center bg-light py-5"
+        >
+          <div class="w-75">
+            <div class="text-success mb-4 d-flex align-items-center">
+              <i class="bi bi-brightness-alt-high-fill fs-4 me-2"></i>
+              <h1 class="display-5 fw-bold m-0">AuroVista</h1>
+            </div>
+
+            <h2 class="h3 mb-2">Welcome back</h2>
+            <p class="text-muted mb-4">Sign in to your account to continue</p>
+
+            <form id="signInForm" novalidate>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light">
+                    <i class="bi bi-envelope"></i>
+                  </span>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    placeholder="Your email"
+                    required
+                  />
+                  <div class="invalid-feedback">
+                    Please enter a valid email address
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label
+                  for="password"
+                  class="form-label d-flex justify-content-between"
+                >
+                  <span>Password</span>
+                  <a
+                    href="forgot-password.html"
+                    class="text-success small text-decoration-none"
+                  >
+                    Forgot password?
+                  </a>
+                </label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light">
+                    <i class="bi bi-lock"></i>
+                  </span>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    placeholder="Enter your password"
+                    required
+                  />
+                  <button
+                    class="btn btn-outline-secondary"
+                    type="button"
+                    id="togglePassword"
+                  >
+                    <i class="bi bi-eye"></i>
+                  </button>
+                  <div class="invalid-feedback">Password is required</div>
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="rememberMe"
+                  />
+                  <label class="form-check-label text-muted" for="rememberMe">
+                    Remember me on this device
+                  </label>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                class="btn btn-success w-100 mb-3"
+                id="submitBtn"
+              >
+                <span id="buttonText">Sign In</span>
+                <span
+                  id="spinnerIcon"
+                  class="spinner-border spinner-border-sm ms-2 d-none"
+                  role="status"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </span>
+              </button>
+
+              <div class="text-center">
+                <p class="text-muted mb-0">
+                  Don't have an account?
+                  <a
+                    href="signup.html"
+                    class="text-success text-decoration-none"
+                    >Create account</a
+                  >
+                </p>
+              </div>
+            </form>
+
+            <div class="mt-4">
+              <div class="d-flex align-items-center mb-3">
+                <hr class="flex-grow-1" />
+                <span class="px-3 text-muted small">Or continue with</span>
+                <hr class="flex-grow-1" />
+              </div>
+
+              <div class="d-grid gap-2">
+                <button
+                  class="btn btn-outline-secondary d-flex align-items-center justify-content-center gap-2"
+                >
+                  <i class="bi bi-google"></i>
+                  Sign in with Google
+                </button>
+                <button
+                  class="btn btn-outline-secondary d-flex align-items-center justify-content-center gap-2"
+                >
+                  <i class="bi bi-microsoft"></i>
+                  Sign in with Microsoft
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Image Section -->
+        <div class="col-lg-6 d-none d-lg-block position-relative">
+          <img
+            src="assets/images/welcome-screen.jpg"
+            alt="Business background"
+            class="w-100 h-100 object-fit-cover"
+          />
+          <div
+            class="position-absolute top-0 start-0 w-100 h-100 bg-success bg-opacity-75 d-flex flex-column justify-content-between p-5 text-white"
+          >
+            <div class="text-end">
+              <p class="mb-0">
+                <a href="#" class="text-white text-decoration-none me-3"
+                  >Help</a
+                >
+                <a href="#" class="text-white text-decoration-none">Contact</a>
+              </p>
+            </div>
+            <div>
+              <p class="fs-4 mb-4">
+                "AuroVista revolutionizes aviation operations management by
+                providing seamless access to airline services and bookings,
+                making it easier than ever to manage your fleet efficiently."
+              </p>
+              <div class="d-flex align-items-center">
+                <div class="me-3">
+                  <div
+                    class="rounded-circle bg-white text-success d-flex align-items-center justify-content-center"
+                    style="width: 48px; height: 48px"
+                  >
+                    <i class="bi bi-person-circle fs-4"></i>
+                  </div>
+                </div>
+                <div>
+                  <p class="fw-bold mb-0">John Doe</p>
+                  <p class="mb-2">CEO, AuroVista</p>
+                  <div class="text-warning">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("signInForm");
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+        const togglePasswordBtn = document.getElementById("togglePassword");
+        const submitBtn = document.getElementById("submitBtn");
+        const buttonText = document.getElementById("buttonText");
+        const spinnerIcon = document.getElementById("spinnerIcon");
+
+        // Toggle password visibility
+        togglePasswordBtn.addEventListener("click", function () {
+          const type =
+            passwordInput.getAttribute("type") === "password"
+              ? "text"
+              : "password";
+          passwordInput.setAttribute("type", type);
+          this.querySelector("i").classList.toggle("bi-eye");
+          this.querySelector("i").classList.toggle("bi-eye-slash");
+        });
+
+        // Email validation
+        function isEmailValid(email) {
+          const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+          return emailPattern.test(email);
+        }
+
+        // Form validation
+        function validateForm() {
+          let isValid = true;
+
+          if (!isEmailValid(emailInput.value)) {
+            emailInput.classList.add("is-invalid");
+            isValid = false;
+          } else {
+            emailInput.classList.remove("is-invalid");
+          }
+
+          if (!passwordInput.value) {
+            passwordInput.classList.add("is-invalid");
+            isValid = false;
+          } else {
+            passwordInput.classList.remove("is-invalid");
+          }
+
+          return isValid;
+        }
+
+        // Input validation
+        [emailInput, passwordInput].forEach((input) => {
+          input.addEventListener("input", function () {
+            this.classList.remove("is-invalid");
+          });
+        });
+
+        // Form submission
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          if (!validateForm()) {
+            return;
+          }
+
+          // Show loading state
+          submitBtn.disabled = true;
+          buttonText.textContent = "Signing in...";
+          spinnerIcon.classList.remove("d-none");
+
+          setTimeout(() => {
+            window.location.href = "index.html";
+          }, 1500);
+        });
+      });
+    </script>
+  </body>
+</html>

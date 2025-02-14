@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AuroVista - Reset Instructions Sent</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-light">
+    <div
+      class="container-fluid min-vh-100 d-flex align-items-center justify-content-center py-5"
+    >
+      <div class="card shadow-sm" style="max-width: 440px">
+        <div class="card-body p-4 text-center">
+          <div
+            class="text-success mb-4 d-flex align-items-center justify-content-center"
+          >
+            <i class="bi bi-brightness-alt-high-fill fs-4 me-2"></i>
+            <h1 class="display-6 fw-bold m-0">AuroVista</h1>
+          </div>
+
+          <div class="text-success mb-4">
+            <div
+              class="d-inline-block p-3 bg-success bg-opacity-10 rounded-circle"
+            >
+              <i class="bi bi-envelope-check fs-1"></i>
+            </div>
+          </div>
+
+          <h2 class="h3 mb-3">Check your email</h2>
+          <p class="text-muted mb-4">
+            We've sent password reset instructions to your email address. Please
+            check your inbox and follow the link to reset your password.
+          </p>
+
+          <div
+            class="alert alert-light border py-2 mb-4 d-inline-flex align-items-center"
+          >
+            <i class="bi bi-clock text-muted me-2"></i>
+            <small class="text-muted">The link will expire in 30 minutes</small>
+          </div>
+
+          <div class="mb-4">
+            <p class="small text-muted mb-0">Didn't receive the email?</p>
+            <a
+              href="#"
+              class="text-success text-decoration-none"
+              id="resendLink"
+            >
+              Click to resend
+            </a>
+          </div>
+
+          <a
+            href="index.html"
+            class="d-flex align-items-center justify-content-center text-success text-decoration-none"
+          >
+            <i class="bi bi-arrow-left me-2"></i>
+            Back to sign in
+          </a>
+
+          <a
+            href="new-password.html"
+            class="d-flex align-items-center justify-content-center text-success text-decoration-none"
+          >
+            <i class="bi bi-lock me-2"></i>
+            Update password
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const resendLink = document.getElementById("resendLink");
+        let cooldown = false;
+
+        resendLink.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          if (cooldown) return;
+
+          // Add loading state
+          this.innerHTML = '<i class="bi bi-arrow-repeat me-2"></i>Sending...';
+          this.style.opacity = "0.7";
+          cooldown = true;
+
+          // Simulate sending email
+          setTimeout(() => {
+            this.innerHTML = '<i class="bi bi-check-lg me-2"></i>Email sent!';
+
+            // Reset after 30 seconds
+            setTimeout(() => {
+              this.innerHTML = "Click to resend";
+              this.style.opacity = "1";
+              cooldown = false;
+            }, 30000);
+          }, 1500);
+        });
+      });
+    </script>
+  </body>
+</html>
