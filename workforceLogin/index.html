@@ -1,0 +1,1942 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WorkforceHub - The Simplest Way to Manage Your Workforce</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-color: #4f46e5;
+        --primary-hover: #4338ca;
+        --primary-light: #eef2ff;
+        --success-color: #10b981;
+        --warning-color: #f59e0b;
+        --danger-color: #ef4444;
+        --info-color: #3b82f6;
+        --purple-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --text-primary: #111827;
+        --text-secondary: #6b7280;
+        --text-muted: #9ca3af;
+        --border-color: #e5e7eb;
+        --bg-light: #f9fafb;
+        --white: #ffffff;
+        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', system-ui, sans-serif;
+        line-height: 1.5;
+        color: var(--text-primary);
+        background: var(--white);
+        margin: 0;
+        padding: 0;
+      }
+
+      .auth-container {
+        min-height: 100vh;
+        display: flex;
+        position: relative;
+      }
+
+      /* Floating Trust Badges */
+      .trust-badges {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 10;
+        display: flex;
+        gap: 12px;
+      }
+
+      .trust-badge {
+        padding: 6px 12px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-secondary);
+        backdrop-filter: blur(10px);
+        box-shadow: var(--shadow-sm);
+        animation: fadeInDown 0.6s ease-out;
+      }
+
+      /* Live Activity Indicator */
+      .live-indicator {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 10;
+        padding: 8px 16px;
+        background: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+        border-radius: 24px;
+        color: var(--success-color);
+        font-size: 12px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        animation: fadeInDown 0.6s ease-out;
+      }
+
+      .live-dot {
+        width: 6px;
+        height: 6px;
+        background: var(--success-color);
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+
+      /* Left Side - Login Form */
+      .auth-form-section {
+        flex: 1;
+        max-width: 50%;
+        padding: 3rem 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: var(--white);
+        position: relative;
+      }
+
+      .form-container {
+        max-width: 420px;
+        margin: 0 auto;
+        width: 100%;
+        animation: fadeInLeft 0.8s ease-out;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        margin-bottom: 3rem;
+      }
+
+      .logo-icon {
+        width: 40px;
+        height: 40px;
+        background: var(--primary-color);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 12px;
+        transform: rotate(-15deg);
+        transition: transform 0.3s ease;
+      }
+
+      .logo:hover .logo-icon {
+        transform: rotate(0deg) scale(1.05);
+      }
+
+      .logo-text {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+
+      /* Role Selection */
+      .role-selector {
+        margin-bottom: 2rem;
+        padding: 20px;
+        background: var(--bg-light);
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+      }
+
+      .role-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 12px;
+      }
+
+      .role-options {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+      }
+
+      .role-option {
+        padding: 12px 8px;
+        text-align: center;
+        border: 2px solid var(--border-color);
+        border-radius: 8px;
+        background: var(--white);
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .role-option:hover {
+        border-color: var(--primary-color);
+        background: var(--primary-light);
+      }
+
+      .role-option.selected {
+        border-color: var(--primary-color);
+        background: var(--primary-color);
+        color: white;
+      }
+
+      .role-option i {
+        display: block;
+        font-size: 16px;
+        margin-bottom: 4px;
+      }
+
+      .auth-header {
+        margin-bottom: 2rem;
+      }
+
+      .auth-header h1 {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: var(--text-primary);
+      }
+
+      .auth-header p {
+        color: var(--text-secondary);
+        font-size: 16px;
+        margin: 0;
+      }
+
+      /* Social Proof */
+      .social-proof {
+        margin-bottom: 1.5rem;
+        text-align: center;
+        padding: 16px;
+        background: rgba(79, 70, 229, 0.05);
+        border-radius: 8px;
+        border: 1px solid rgba(79, 70, 229, 0.1);
+      }
+
+      .social-proof-text {
+        font-size: 13px;
+        color: var(--primary-color);
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+
+      .customer-avatars {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 8px;
+      }
+
+      .customer-avatar {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 2px solid white;
+        margin-left: -4px;
+        background: var(--primary-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        font-weight: 600;
+        color: white;
+      }
+
+      .customer-avatar:first-child {
+        margin-left: 0;
+      }
+
+      .social-buttons {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 2rem;
+      }
+
+      .btn-social {
+        flex: 1;
+        padding: 12px 16px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        background: var(--white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-weight: 500;
+        color: var(--text-primary);
+        text-decoration: none;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn-social::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+        transition: left 0.5s ease;
+      }
+
+      .btn-social:hover::before {
+        left: 100%;
+      }
+
+      .btn-social:hover {
+        background: var(--bg-light);
+        border-color: var(--text-muted);
+        color: var(--text-primary);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+
+      /* SSO Options */
+      .sso-section {
+        margin-bottom: 2rem;
+      }
+
+      .sso-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 12px;
+        text-align: center;
+      }
+
+      .sso-options {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        margin-bottom: 16px;
+      }
+
+      .sso-option {
+        padding: 8px 12px;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        background: var(--white);
+        cursor: pointer;
+        text-align: center;
+        font-size: 12px;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .sso-option:hover {
+        background: var(--bg-light);
+        transform: translateY(-1px);
+      }
+
+      .magic-link-btn {
+        width: 100%;
+        padding: 10px 16px;
+        border: 1px dashed var(--primary-color);
+        border-radius: 8px;
+        background: var(--primary-light);
+        color: var(--primary-color);
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .magic-link-btn:hover {
+        background: var(--primary-color);
+        color: white;
+      }
+
+      .divider {
+        position: relative;
+        text-align: center;
+        margin: 2rem 0;
+      }
+
+      .divider::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: var(--border-color);
+      }
+
+      .divider span {
+        background: var(--white);
+        padding: 0 16px;
+        color: var(--text-secondary);
+        font-size: 14px;
+      }
+
+      /* Smart Form Fields */
+      .form-group {
+        margin-bottom: 1.5rem;
+        position: relative;
+      }
+
+      .form-label {
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: var(--text-primary);
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .smart-suggestion {
+        font-size: 11px;
+        color: var(--text-muted);
+        font-weight: normal;
+      }
+
+      .form-control {
+        width: 100%;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 12px 16px;
+        font-size: 16px;
+        transition: all 0.2s ease;
+        background: var(--white);
+        position: relative;
+      }
+
+      .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        outline: none;
+        transform: translateY(-1px);
+      }
+
+      .form-control::placeholder {
+        color: var(--text-muted);
+      }
+
+      /* Loading Skeleton */
+      .skeleton {
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+      }
+
+      @keyframes loading {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+      }
+
+      .password-field {
+        position: relative;
+      }
+
+      .password-toggle {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 4px;
+        transition: color 0.2s ease;
+      }
+
+      .password-toggle:hover {
+        color: var(--primary-color);
+      }
+
+      .form-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .checkbox-group input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        accent-color: var(--primary-color);
+      }
+
+      .checkbox-group label {
+        font-size: 14px;
+        color: var(--text-secondary);
+        margin: 0;
+        cursor: pointer;
+      }
+
+      .forgot-link {
+        color: var(--primary-color);
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        transition: color 0.2s ease;
+      }
+
+      .forgot-link:hover {
+        color: var(--primary-hover);
+      }
+
+      .btn-primary {
+        width: 100%;
+        background: var(--primary-color);
+        border: 1px solid var(--primary-color);
+        border-radius: 8px;
+        padding: 12px 24px;
+        font-weight: 600;
+        font-size: 16px;
+        color: white;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        margin-bottom: 1.5rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn-primary::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s ease;
+      }
+
+      .btn-primary:hover::before {
+        left: 100%;
+      }
+
+      .btn-primary:hover {
+        background: var(--primary-hover);
+        border-color: var(--primary-hover);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .btn-primary:disabled {
+        opacity: 0.6;
+        transform: none;
+        box-shadow: none;
+        cursor: not-allowed;
+      }
+
+      .signin-link {
+        text-align: center;
+        font-size: 14px;
+        color: var(--text-secondary);
+      }
+
+      .signin-link a {
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+      }
+
+      .signin-link a:hover {
+        color: var(--primary-hover);
+      }
+
+      .footer {
+        margin-top: auto;
+        padding-top: 2rem;
+        text-align: center;
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+
+      /* Right Side - Enhanced Dashboard Preview */
+      .dashboard-preview {
+        flex: 1;
+        max-width: 50%;
+        background: var(--purple-gradient);
+        display: flex;
+        flex-direction: column;
+        padding: 3rem 2rem;
+        color: white;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .preview-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        animation: fadeInRight 0.8s ease-out;
+      }
+
+      .preview-header h2 {
+        font-size: 36px;
+        font-weight: 700;
+        margin-bottom: 16px;
+        line-height: 1.2;
+      }
+
+      .preview-header p {
+        font-size: 16px;
+        opacity: 0.9;
+        margin: 0;
+      }
+
+      /* ROI Calculator Widget */
+      .roi-widget {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 2rem;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        animation: fadeInRight 0.8s ease-out 0.2s both;
+      }
+
+      .roi-title {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .roi-stats {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .roi-stat {
+        text-align: center;
+      }
+
+      .roi-value {
+        font-size: 20px;
+        font-weight: 700;
+        color: white;
+      }
+
+      .roi-label {
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      .dashboard-mockup {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 16px;
+        padding: 24px;
+        color: var(--text-primary);
+        box-shadow: var(--shadow-lg);
+        margin-bottom: 2rem;
+        position: relative;
+        backdrop-filter: blur(10px);
+        animation: fadeInRight 0.8s ease-out 0.4s both;
+      }
+
+      /* Live Activity Feed */
+      .activity-indicator {
+        position: absolute;
+        top: -8px;
+        right: 20px;
+        background: var(--success-color);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 10px;
+        font-weight: 600;
+        animation: bounce 2s infinite;
+      }
+
+      @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+        40% { transform: translateY(-5px); }
+        60% { transform: translateY(-3px); }
+      }
+
+      .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .dashboard-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+
+      .dashboard-date {
+        font-size: 14px;
+        color: var(--text-secondary);
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .status-indicator {
+        width: 8px;
+        height: 8px;
+        background: var(--success-color);
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+
+      /* Enhanced Stats */
+      .stats-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin-bottom: 24px;
+      }
+
+      .stat-card {
+        padding: 16px;
+        border-radius: 12px;
+        background: var(--bg-light);
+        border: 1px solid var(--border-color);
+        transition: transform 0.2s ease;
+        cursor: pointer;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+
+      .stat-value {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 4px;
+        counter-reset: counter;
+        animation: countUp 2s ease-out;
+      }
+
+      .stat-label {
+        font-size: 14px;
+        color: var(--text-secondary);
+        margin-bottom: 8px;
+      }
+
+      .stat-change {
+        font-size: 12px;
+        color: var(--success-color);
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-weight: 600;
+      }
+
+      .stat-trend {
+        width: 40px;
+        height: 20px;
+        background: linear-gradient(45deg, transparent, var(--success-color));
+        border-radius: 4px;
+        opacity: 0.3;
+      }
+
+      /* Interactive Team Section */
+      .team-section {
+        margin-bottom: 16px;
+      }
+
+      .section-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .team-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .team-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px;
+        border-radius: 8px;
+        background: white;
+        border: 1px solid var(--border-color);
+        transition: all 0.2s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .team-item::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: var(--success-color);
+        transform: scaleY(0);
+        transition: transform 0.2s ease;
+      }
+
+      .team-item:hover {
+        background: var(--bg-light);
+        transform: translateX(4px);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .team-item:hover::before {
+        transform: scaleY(1);
+      }
+
+      .team-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .team-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 12px;
+        color: white;
+        position: relative;
+      }
+
+      .online-indicator {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 10px;
+        height: 10px;
+        background: var(--success-color);
+        border: 2px solid white;
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+
+      .team-details h6 {
+        font-size: 14px;
+        font-weight: 600;
+        margin: 0 0 2px 0;
+        color: var(--text-primary);
+      }
+
+      .team-details p {
+        font-size: 12px;
+        color: var(--text-secondary);
+        margin: 0;
+      }
+
+      .team-actions {
+        display: flex;
+        gap: 4px;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      }
+
+      .team-item:hover .team-actions {
+        opacity: 1;
+      }
+
+      .team-action {
+        width: 24px;
+        height: 24px;
+        border-radius: 4px;
+        border: 1px solid var(--border-color);
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 10px;
+        transition: all 0.2s ease;
+      }
+
+      .team-action:hover {
+        background: var(--primary-color);
+        color: white;
+      }
+
+      .team-progress {
+        width: 60px;
+        height: 6px;
+        background: var(--border-color);
+        border-radius: 3px;
+        overflow: hidden;
+        margin-right: 8px;
+      }
+
+      .team-progress-fill {
+        height: 100%;
+        border-radius: 3px;
+        transition: width 2s ease;
+        animation: progressFill 3s ease-out;
+      }
+
+      @keyframes progressFill {
+        from { width: 0; }
+      }
+
+      .add-member-btn {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 8px 12px;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        transition: all 0.2s ease;
+        animation: pulse 3s infinite;
+      }
+
+      .add-member-btn:hover {
+        background: var(--primary-hover);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-md);
+      }
+
+      /* Enhanced Company Logos */
+      .company-logos {
+        margin-top: auto;
+        text-align: center;
+        animation: fadeInRight 0.8s ease-out 0.6s both;
+      }
+
+      .logos-title {
+        font-size: 12px;
+        opacity: 0.8;
+        margin-bottom: 16px;
+      }
+
+      .logos-grid {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 32px;
+        flex-wrap: wrap;
+      }
+
+      .company-logo {
+        height: 24px;
+        opacity: 0.8;
+        filter: brightness(0) invert(1);
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
+
+      .company-logo:hover {
+        opacity: 1;
+        transform: scale(1.1);
+      }
+
+      /* Animations */
+      @keyframes fadeInLeft {
+        from { opacity: 0; transform: translateX(-30px); }
+        to { opacity: 1; transform: translateX(0); }
+      }
+
+      @keyframes fadeInRight {
+        from { opacity: 0; transform: translateX(30px); }
+        to { opacity: 1; transform: translateX(0); }
+      }
+
+      @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }
+
+      @keyframes countUp {
+        from { transform: scale(0.8); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+      }
+
+      /* Responsive */
+      @media (max-width: 991.98px) {
+        .auth-container {
+          flex-direction: column;
+        }
+        
+        .auth-form-section {
+          max-width: 100%;
+          padding: 2rem 1rem;
+        }
+        
+        .dashboard-preview {
+          max-width: 100%;
+          min-height: 60vh;
+          padding: 2rem 1rem;
+        }
+        
+        .preview-header h2 {
+          font-size: 28px;
+        }
+        
+        .stats-row {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+        
+        .logos-grid {
+          gap: 16px;
+        }
+
+        .role-options {
+          grid-template-columns: 1fr;
+        }
+
+        .trust-badges {
+          position: relative;
+          top: 0;
+          left: 0;
+          justify-content: center;
+          margin-bottom: 1rem;
+        }
+
+        .live-indicator {
+          position: relative;
+          top: 0;
+          right: 0;
+          margin: 0 auto 1rem;
+          width: fit-content;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .social-buttons {
+          flex-direction: column;
+        }
+        
+        .auth-form-section {
+          padding: 1.5rem 1rem;
+        }
+
+        .sso-options {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Tooltip Styles */
+      .tooltip-custom {
+        position: relative;
+        display: inline-block;
+      }
+
+      .tooltip-custom .tooltip-text {
+        visibility: hidden;
+        width: 200px;
+        background-color: var(--text-primary);
+        color: white;
+        text-align: center;
+        border-radius: 6px;
+        padding: 8px;
+        position: absolute;
+        z-index: 1000;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -100px;
+        font-size: 12px;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .tooltip-custom:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="auth-container">
+      <!-- Trust Badges -->
+      <div class="trust-badges">
+        <div class="trust-badge">🔒 SOC 2 Compliant</div>
+        <div class="trust-badge">🛡️ GDPR Ready</div>
+        <div class="trust-badge">⭐ 4.9/5 Rating</div>
+      </div>
+
+      <!-- Live Activity -->
+      <div class="live-indicator">
+        <div class="live-dot"></div>
+        <span>1,247 teams online now</span>
+      </div>
+
+      <!-- Left Side - Enhanced Login Form -->
+      <div class="auth-form-section">
+        <div class="form-container">
+          <!-- Logo -->
+          <div class="logo">
+            <div class="logo-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z"/>
+              </svg>
+            </div>
+            <div class="logo-text">WorkforceHub</div>
+          </div>
+
+          <!-- Header -->
+          <div class="auth-header">
+            <h1>Get Started Now</h1>
+            <p>Enter your credentials to access your account</p>
+          </div>
+
+          <!-- Social Login -->
+          <div class="social-buttons">
+            <button class="btn-social" id="googleLogin">
+              <svg width="18" height="18" viewBox="0 0 24 24">
+                <path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                <path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+              </svg>
+              Google
+            </button>
+            <button class="btn-social" id="appleLogin">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+              </svg>
+              Apple
+            </button>
+          </div>
+
+          <div class="divider">
+            <span>or</span>
+          </div>
+
+          <!-- Login Form -->
+          <form id="loginForm">
+            <div class="form-group">
+              <label for="name" class="form-label">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                placeholder="Rafiqur Rahman"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="email" class="form-label">Email address</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                placeholder="rafiqur51@company.com"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="password" class="form-label">Password</label>
+              <div class="password-field">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  placeholder="min 8 chars"
+                  required
+                />
+                <button type="button" class="password-toggle" id="togglePassword">
+                  <i class="bi bi-eye"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="checkbox-group">
+                <input type="checkbox" id="terms" required />
+                <label for="terms">I agree to the <a href="#" class="forgot-link">Terms & Privacy</a></label>
+              </div>
+              <a href="#" class="forgot-link">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="btn-primary" id="loginBtn">
+              <span>Login</span>
+            </button>
+          </form>
+
+          <div class="signin-link">
+            Have an account? <a href="#" id="signInLink">Sign in</a>
+          </div>
+
+          <div class="footer">
+            2024 WorkforceHub, All rights reserved • <a href="#" style="color: var(--text-muted);">Privacy</a> • <a href="#" style="color: var(--text-muted);">Terms</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Side - Enhanced Dashboard Preview -->
+      <div class="dashboard-preview">
+        <div class="preview-header">
+          <h2>The simplest way to manage your workforce</h2>
+          <p>Get real-time insights and boost productivity by 40%</p>
+        </div>
+
+        <!-- ROI Calculator Widget -->
+        <div class="roi-widget">
+          <div class="roi-title">💰 Potential Savings Calculator</div>
+          <div class="roi-stats">
+            <div class="roi-stat">
+              <div class="roi-value">$47K</div>
+              <div class="roi-label">Annual Savings</div>
+            </div>
+            <div class="roi-stat">
+              <div class="roi-value">15hrs</div>
+              <div class="roi-label">Time Saved/Week</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-mockup">
+          <div class="activity-indicator">Live Activity</div>
+          
+          <button class="add-member-btn">
+            <i class="bi bi-plus"></i>
+            Add Member
+          </button>
+          
+          <div class="dashboard-header">
+            <div class="dashboard-title">Dashboard</div>
+            <div class="dashboard-date">
+              <div class="status-indicator"></div>
+              Dec 31, 2022 - Jan 31, 2023
+            </div>
+          </div>
+
+          <div class="stats-row">
+            <div class="stat-card">
+              <div class="stat-label">Productive Time</div>
+              <div class="stat-value">12.4 hr</div>
+              <div class="stat-change">
+                <i class="bi bi-arrow-up"></i>
+                +2% last week
+                <div class="stat-trend"></div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Focused Time</div>
+              <div class="stat-value">8.5 hr</div>
+              <div class="stat-change">
+                <i class="bi bi-arrow-up"></i>
+                +5% last week
+                <div class="stat-trend"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="team-section">
+            <div class="section-title">
+              <i class="bi bi-people-fill"></i>
+              Team's Utilization
+              <span style="font-size: 12px; color: var(--success-color); font-weight: normal;">(4 online)</span>
+            </div>
+            <div class="team-list">
+              <div class="team-item">
+                <div class="team-info">
+                  <div class="team-avatar" style="background: #10b981;">
+                    LA
+                    <div class="online-indicator"></div>
+                  </div>
+                  <div class="team-details">
+                    <h6>Leslie Alexander</h6>
+                    <p>Marketing • Active now</p>
+                  </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <div class="team-progress">
+                    <div class="team-progress-fill" style="width: 85%; background: #10b981;"></div>
+                  </div>
+                  <div class="team-actions">
+                    <div class="team-action tooltip-custom">
+                      <i class="bi bi-chat"></i>
+                      <span class="tooltip-text">Send message</span>
+                    </div>
+                    <div class="team-action tooltip-custom">
+                      <i class="bi bi-eye"></i>
+                      <span class="tooltip-text">View profile</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="team-item">
+                <div class="team-info">
+                  <div class="team-avatar" style="background: #f59e0b;">
+                    CH
+                    <div class="online-indicator"></div>
+                  </div>
+                  <div class="team-details">
+                    <h6>Courtney Henry</h6>
+                    <p>Customer Success • 2min ago</p>
+                  </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <div class="team-progress">
+                    <div class="team-progress-fill" style="width: 65%; background: #f59e0b;"></div>
+                  </div>
+                  <div class="team-actions">
+                    <div class="team-action">
+                      <i class="bi bi-chat"></i>
+                    </div>
+                    <div class="team-action">
+                      <i class="bi bi-eye"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="team-item">
+                <div class="team-info">
+                  <div class="team-avatar" style="background: #ef4444;">RF</div>
+                  <div class="team-details">
+                    <h6>Robert Fox</h6>
+                    <p>Dev Team • Offline</p>
+                  </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <div class="team-progress">
+                    <div class="team-progress-fill" style="width: 45%; background: #ef4444;"></div>
+                  </div>
+                  <div class="team-actions">
+                    <div class="team-action">
+                      <i class="bi bi-calendar"></i>
+                    </div>
+                    <div class="team-action">
+                      <i class="bi bi-eye"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="team-item">
+                <div class="team-info">
+                  <div class="team-avatar" style="background: #8b5cf6;">
+                    ST
+                    <div class="online-indicator"></div>
+                  </div>
+                  <div class="team-details">
+                    <h6>Sales Team</h6>
+                    <p>Sales • In meeting</p>
+                  </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <div class="team-progress">
+                    <div class="team-progress-fill" style="width: 75%; background: #8b5cf6;"></div>
+                  </div>
+                  <div class="team-actions">
+                    <div class="team-action">
+                      <i class="bi bi-people"></i>
+                    </div>
+                    <div class="team-action">
+                      <i class="bi bi-graph-up"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="company-logos">
+          <div class="logos-title">Trusted by industry leaders</div>
+          <div class="logos-grid">
+            <span style="font-weight: 500;">WeChat</span>
+            <span style="font-weight: 600;">Booking.com</span>
+            <span style="font-weight: 700;">Google</span>
+            <span style="font-weight: 500;">🎵 Spotify</span>
+            <span style="font-weight: 300; font-style: italic;">stripe</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+      class EnhancedWorkforceLogin {
+        constructor() {
+          this.selectedRole = 'hr';
+          this.companyData = null;
+          this.init();
+        }
+
+        init() {
+          this.setupEventListeners();
+          this.setupPasswordToggle();
+          this.setupSmartFeatures();
+          this.setupAnimations();
+          this.detectLocation();
+        }
+
+        setupEventListeners() {
+          const form = document.getElementById('loginForm');
+          const roleOptions = document.querySelectorAll('.role-option');
+          const ssoOptions = document.querySelectorAll('.sso-option');
+          const magicLinkBtn = document.querySelector('.magic-link-btn');
+
+          // Role selection
+          roleOptions.forEach(option => {
+            option.addEventListener('click', (e) => this.selectRole(e.target));
+          });
+
+          // SSO options
+          ssoOptions.forEach(option => {
+            option.addEventListener('click', (e) => this.handleSSOLogin(e.currentTarget));
+          });
+
+          // Magic link
+          magicLinkBtn.addEventListener('click', () => this.sendMagicLink());
+
+          // Form submission
+          form.addEventListener('submit', (e) => this.handleFormSubmit(e));
+
+          // Real-time validation
+          const inputs = form.querySelectorAll('input[required]');
+          inputs.forEach(input => {
+            input.addEventListener('blur', () => this.validateField(input));
+            input.addEventListener('input', () => this.clearFieldError(input));
+          });
+
+          // Email domain detection
+          const emailInput = document.getElementById('email');
+          emailInput.addEventListener('blur', () => this.detectCompany(emailInput.value));
+
+          // Social login
+          document.getElementById('googleLogin').addEventListener('click', () => this.handleSocialLogin('google'));
+          document.getElementById('appleLogin').addEventListener('click', () => this.handleSocialLogin('apple'));
+        }
+
+        selectRole(option) {
+          document.querySelectorAll('.role-option').forEach(opt => opt.classList.remove('selected'));
+          option.classList.add('selected');
+          this.selectedRole = option.dataset.role;
+          this.updateUIForRole();
+        }
+
+        updateUIForRole() {
+          const headerText = document.querySelector('.auth-header p');
+          const buttonText = document.querySelector('#loginBtn span');
+          
+          const roleTexts = {
+            manager: {
+              header: 'Access your team dashboard and analytics',
+              button: 'Start Managing Team'
+            },
+            hr: {
+              header: 'Streamline HR processes and employee management',
+              button: 'Launch HR Dashboard'
+            },
+            employee: {
+              header: 'Track your productivity and collaborate with teammates',
+              button: 'Join Your Workspace'
+            }
+          };
+
+          if (roleTexts[this.selectedRole]) {
+            headerText.textContent = roleTexts[this.selectedRole].header;
+            buttonText.textContent = roleTexts[this.selectedRole].button;
+          }
+        }
+
+        detectCompany(email) {
+          if (!email.includes('@')) return;
+          
+          const domain = email.split('@')[1];
+          const commonDomains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com'];
+          
+          if (!commonDomains.includes(domain)) {
+            const companyName = domain.split('.')[0];
+            this.showCompanyDetection(companyName);
+            this.suggestSSO(domain);
+          }
+        }
+
+        showCompanyDetection(companyName) {
+          const emailGroup = document.getElementById('email').parentNode;
+          const existingMsg = emailGroup.querySelector('.company-detection');
+          
+          if (existingMsg) existingMsg.remove();
+          
+          const detectionMsg = document.createElement('div');
+          detectionMsg.className = 'company-detection';
+          detectionMsg.style.cssText = `
+            margin-top: 8px;
+            padding: 8px 12px;
+            background: rgba(79, 70, 229, 0.1);
+            border: 1px solid rgba(79, 70, 229, 0.2);
+            border-radius: 6px;
+            font-size: 12px;
+            color: var(--primary-color);
+            animation: fadeInUp 0.3s ease;
+          `;
+          detectionMsg.innerHTML = `
+            <i class="bi bi-building"></i>
+            Detected company: <strong>${companyName}</strong>
+            <button style="float: right; background: none; border: none; color: inherit; cursor: pointer;">
+              <i class="bi bi-x"></i>
+            </button>
+          `;
+          
+          detectionMsg.querySelector('button').addEventListener('click', () => detectionMsg.remove());
+          emailGroup.appendChild(detectionMsg);
+        }
+
+        suggestSSO(domain) {
+          // Simulate SSO suggestion based on domain
+          const ssoSuggestions = {
+            'microsoft.com': 'Azure AD',
+            'google.com': 'G Suite',
+            'salesforce.com': 'Salesforce',
+            'slack.com': 'Slack'
+          };
+          
+          if (ssoSuggestions[domain]) {
+            this.showSSOSuggestion(ssoSuggestions[domain]);
+          }
+        }
+
+        showSSOSuggestion(ssoType) {
+          const ssoSection = document.querySelector('.sso-section');
+          const suggestion = document.createElement('div');
+          suggestion.style.cssText = `
+            margin-top: 8px;
+            padding: 8px 12px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 6px;
+            font-size: 12px;
+            color: var(--success-color);
+            animation: fadeInUp 0.3s ease;
+          `;
+          suggestion.innerHTML = `
+            <i class="bi bi-lightbulb"></i>
+            We recommend using ${ssoType} for faster login
+          `;
+          
+          ssoSection.appendChild(suggestion);
+          setTimeout(() => suggestion.remove(), 5000);
+        }
+
+        handleSSOLogin(option) {
+          const ssoType = option.querySelector('span').textContent;
+          this.showLoading('Redirecting to ' + ssoType + '...');
+          
+          // Simulate SSO redirect
+          setTimeout(() => {
+            this.hideLoading();
+          }, 2000);
+        }
+
+        sendMagicLink() {
+          const email = document.getElementById('email').value;
+          if (!email) {
+            document.getElementById('email').focus();
+            return;
+          }
+          
+          const btn = document.querySelector('.magic-link-btn');
+          const originalText = btn.innerHTML;
+          
+          btn.innerHTML = `
+            <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+            Sending magic link...
+          `;
+          btn.disabled = true;
+          
+          setTimeout(() => {
+            btn.innerHTML = `<i class="bi bi-check"></i> Magic link sent to ${email}`;
+            btn.style.background = 'var(--success-color)';
+            btn.style.color = 'white';
+            btn.style.borderColor = 'var(--success-color)';
+            
+            setTimeout(() => {
+              btn.innerHTML = originalText;
+              btn.disabled = false;
+              btn.style = '';
+            }, 3000);
+          }, 1500);
+        }
+
+        setupPasswordToggle() {
+          const toggleBtn = document.getElementById('togglePassword');
+          const passwordInput = document.getElementById('password');
+
+          toggleBtn.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type');
+            const icon = toggleBtn.querySelector('i');
+            
+            if (type === 'password') {
+              passwordInput.setAttribute('type', 'text');
+              icon.classList.replace('bi-eye', 'bi-eye-slash');
+            } else {
+              passwordInput.setAttribute('type', 'password');
+              icon.classList.replace('bi-eye-slash', 'bi-eye');
+            }
+          });
+        }
+
+        setupSmartFeatures() {
+          // Auto-detect timezone
+          const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        
+          const nameInput = document.getElementById('name');
+          nameInput.addEventListener('input', (e) => {
+            const name = e.target.value;
+            if (name.includes(' ') && name.length > 5) {
+              this.suggestEmailFormat(name);
+            }
+          });
+        }
+
+        suggestEmailFormat(fullName) {
+          const emailInput = document.getElementById('email');
+          if (emailInput.value) return;
+          
+          const nameParts = fullName.toLowerCase().split(' ');
+          const suggestion = `${nameParts[0]}.${nameParts[nameParts.length - 1]}@company.com`;
+          
+          emailInput.placeholder = suggestion;
+          emailInput.style.borderColor = 'var(--info-color)';
+          
+          setTimeout(() => {
+            emailInput.style.borderColor = '';
+            emailInput.placeholder = 'rafiqur51@company.com';
+          }, 3000);
+        }
+
+        setupAnimations() {
+          // Animate stats on load
+          setTimeout(() => {
+            this.animateStats();
+          }, 1000);
+
+          // Animate team progress bars
+          setTimeout(() => {
+            this.animateProgressBars();
+          }, 1500);
+
+          // Live activity simulation
+          this.simulateLiveActivity();
+        }
+
+        animateStats() {
+          const statValues = document.querySelectorAll('.stat-value');
+          statValues.forEach(stat => {
+            const finalValue = stat.textContent;
+            const numMatch = finalValue.match(/[\d.]+/);
+            if (numMatch) {
+              const finalNum = parseFloat(numMatch[0]);
+              this.countUpAnimation(stat, 0, finalNum, 1000, finalValue);
+            }
+          });
+        }
+
+        countUpAnimation(element, start, end, duration, suffix) {
+          const startTime = performance.now();
+          const animate = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+            const current = start + (end - start) * easeOutQuart;
+            
+            element.textContent = suffix.replace(/[\d.]+/, current.toFixed(1));
+            
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            }
+          };
+          requestAnimationFrame(animate);
+        }
+
+        animateProgressBars() {
+          const progressBars = document.querySelectorAll('.team-progress-fill');
+          progressBars.forEach((bar, index) => {
+            setTimeout(() => {
+              const width = bar.style.width;
+              bar.style.width = '0%';
+              bar.offsetHeight; // Force reflow
+              bar.style.width = width;
+            }, index * 200);
+          });
+        }
+
+        simulateLiveActivity() {
+          const activities = [
+            '1,247 teams online now',
+            '1,251 teams online now',
+            '1,245 teams online now',
+            '1,253 teams online now'
+          ];
+          
+          let index = 0;
+          setInterval(() => {
+            const indicator = document.querySelector('.live-indicator span');
+            if (indicator) {
+              indicator.textContent = activities[index % activities.length];
+              index++;
+            }
+          }, 5000);
+        }
+
+        detectLocation() {
+          // Simulate location-based customization
+          const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+          if (timezone.includes('Europe')) {
+            this.addGDPRNotice();
+          }
+        }
+
+        addGDPRNotice() {
+          const footer = document.querySelector('.footer');
+          const gdprNotice = document.createElement('div');
+          gdprNotice.style.cssText = `
+            margin-top: 16px;
+            padding: 12px;
+            background: rgba(79, 70, 229, 0.05);
+            border: 1px solid rgba(79, 70, 229, 0.1);
+            border-radius: 8px;
+            font-size: 11px;
+            color: var(--text-secondary);
+          `;
+          gdprNotice.innerHTML = `
+            <i class="bi bi-shield-check"></i>
+            GDPR Compliant: Your data is processed in accordance with EU regulations.
+            <a href="#" style="color: var(--primary-color);">Learn more</a>
+          `;
+          footer.appendChild(gdprNotice);
+        }
+
+        handleFormSubmit(e) {
+          e.preventDefault();
+          
+          if (this.validateForm(e.target)) {
+            this.showLoading();
+            this.simulateOnboarding();
+          }
+        }
+
+        simulateOnboarding() {
+          const steps = [
+            { message: 'Creating your account...', duration: 1000 },
+            { message: 'Setting up your workspace...', duration: 1500 },
+            { message: 'Preparing your dashboard...', duration: 1000 },
+            { message: 'Almost ready...', duration: 500 }
+          ];
+          
+          let currentStep = 0;
+          const processStep = () => {
+            if (currentStep < steps.length) {
+              const step = steps[currentStep];
+              this.updateLoadingMessage(step.message);
+              
+              setTimeout(() => {
+                currentStep++;
+                processStep();
+              }, step.duration);
+            } else {
+              this.completeOnboarding();
+            }
+          };
+          
+          processStep();
+        }
+
+        updateLoadingMessage(message) {
+          const btn = document.getElementById('loginBtn');
+          const span = btn.querySelector('span');
+          span.innerHTML = `
+            <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+            ${message}
+          `;
+        }
+
+        completeOnboarding() {
+          const btn = document.getElementById('loginBtn');
+          const span = btn.querySelector('span');
+          
+          span.innerHTML = `
+            <i class="bi bi-check-lg me-2"></i>
+            Welcome to WorkforceHub!
+          `;
+          btn.style.background = 'var(--success-color)';
+          btn.style.borderColor = 'var(--success-color)';
+          
+          setTimeout(() => {
+            window.location.href = 'dashboard.html';
+          }, 1000);
+        }
+
+        validateForm(form) {
+          const inputs = form.querySelectorAll('input[required]');
+          let isValid = true;
+
+          inputs.forEach(input => {
+            if (!this.validateField(input)) {
+              isValid = false;
+            }
+          });
+
+          return isValid;
+        }
+
+        validateField(input) {
+          const value = input.value.trim();
+          let isValid = true;
+          let errorMessage = '';
+
+          switch (input.type) {
+            case 'email':
+              if (!value || !this.isValidEmail(value)) {
+                errorMessage = 'Please enter a valid work email address';
+                isValid = false;
+              }
+              break;
+            case 'password':
+              if (!value || value.length < 8) {
+                errorMessage = 'Password must be at least 8 characters long';
+                isValid = false;
+              } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(value)) {
+                errorMessage = 'Password must contain uppercase, lowercase, and number';
+                isValid = false;
+              }
+              break;
+            case 'text':
+              if (!value) {
+                errorMessage = 'This field is required';
+                isValid = false;
+              } else if (input.id === 'name' && !value.includes(' ')) {
+                errorMessage = 'Please enter your full name';
+                isValid = false;
+              }
+              break;
+            case 'checkbox':
+              if (!input.checked) {
+                errorMessage = 'Please accept the terms and privacy policy';
+                isValid = false;
+              }
+              break;
+          }
+
+          if (!isValid) {
+            this.showFieldError(input, errorMessage);
+          } else {
+            this.clearFieldError(input);
+          }
+
+          return isValid;
+        }
+
+        isValidEmail(email) {
+          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        showFieldError(input, message) {
+          input.style.borderColor = '#ef4444';
+          input.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.1)';
+          
+          const existingError = input.parentNode.querySelector('.error-message');
+          if (existingError) {
+            existingError.remove();
+          }
+          
+          const errorDiv = document.createElement('div');
+          errorDiv.className = 'error-message';
+          errorDiv.style.cssText = `
+            color: #ef4444;
+            font-size: 12px;
+            margin-top: 4px;
+            animation: fadeInUp 0.2s ease;
+          `;
+          errorDiv.textContent = message;
+          
+          input.parentNode.appendChild(errorDiv);
+        }
+
+        clearFieldError(input) {
+          input.style.borderColor = '';
+          input.style.boxShadow = '';
+          const errorMessage = input.parentNode.querySelector('.error-message');
+          if (errorMessage) {
+            errorMessage.remove();
+          }
+        }
+
+        showLoading() {
+          const btn = document.getElementById('loginBtn');
+          const span = btn.querySelector('span');
+          
+          btn.disabled = true;
+          span.innerHTML = `
+            <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+            Creating your account...
+          `;
+        }
+
+        hideLoading() {
+          const btn = document.getElementById('loginBtn');
+          const span = btn.querySelector('span');
+          
+          btn.disabled = false;
+          span.textContent = 'Create Account & Start Free Trial';
+        }
+
+        handleSocialLogin(provider) {
+          this.showLoading();
+          setTimeout(() => {
+            this.simulateOnboarding();
+          }, 1000);
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        new EnhancedWorkforceLogin();
+      });
+    </script>
+  </body>
+</html>
