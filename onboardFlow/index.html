@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OnboardFlow - Get Started</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-color: #10b981;
+        --primary-hover: #059669;
+        --primary-light: #d1fae5;
+        --text-primary: #111827;
+        --text-secondary: #6b7280;
+        --text-muted: #9ca3af;
+        --border-color: #e5e7eb;
+        --bg-light: #f9fafb;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', system-ui, sans-serif;
+        line-height: 1.5;
+        color: var(--text-primary);
+        background: #ffffff;
+      }
+
+      .onboarding-container {
+        min-height: 100vh;
+        display: flex;
+      }
+
+      .sidebar {
+        width: 320px;
+        background: var(--bg-light);
+        padding: 2rem;
+        border-right: 1px solid var(--border-color);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        margin-bottom: 3rem;
+      }
+
+      .logo-icon {
+        width: 32px;
+        height: 32px;
+        background: var(--primary-color);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 12px;
+      }
+
+      .step-list {
+        flex: 1;
+      }
+
+      .step-item {
+        display: flex;
+        align-items: flex-start;
+        padding: 1.5rem 0;
+        position: relative;
+        opacity: 0.5;
+        transition: all 0.3s ease;
+      }
+
+      .step-item.active {
+        opacity: 1;
+      }
+
+      .step-item.completed {
+        opacity: 0.8;
+      }
+
+      .step-item:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        left: 15px;
+        top: 48px;
+        bottom: -24px;
+        width: 2px;
+        background: var(--border-color);
+      }
+
+      .step-item.completed:not(:last-child)::after {
+        background: var(--primary-color);
+      }
+
+      .step-number {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 14px;
+        margin-right: 16px;
+        flex-shrink: 0;
+        border: 2px solid var(--border-color);
+        background: white;
+        color: var(--text-muted);
+        transition: all 0.3s ease;
+      }
+
+      .step-item.active .step-number {
+        background: var(--primary-color);
+        border-color: var(--primary-color);
+        color: white;
+      }
+
+      .step-item.completed .step-number {
+        background: var(--primary-color);
+        border-color: var(--primary-color);
+        color: white;
+      }
+
+      .step-content h6 {
+        margin: 0 0 4px 0;
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--text-primary);
+      }
+
+      .step-content p {
+        margin: 0;
+        font-size: 13px;
+        color: var(--text-secondary);
+        line-height: 1.4;
+      }
+
+      .sidebar-footer {
+        padding-top: 2rem;
+        border-top: 1px solid var(--border-color);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .btn-link {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 14px;
+        padding: 0;
+        border: none;
+        background: none;
+      }
+
+      .btn-link:hover {
+        color: var(--primary-color);
+      }
+
+      .main-content {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: white;
+      }
+
+      .form-container {
+        width: 100%;
+        max-width: 480px;
+      }
+
+      .progress-dots {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 3rem;
+        gap: 8px;
+      }
+
+      .progress-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--border-color);
+        transition: all 0.3s ease;
+      }
+
+      .progress-dot.active {
+        background: var(--primary-color);
+        transform: scale(1.2);
+      }
+
+      .progress-dot.completed {
+        background: var(--primary-color);
+      }
+
+      .step-header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+      }
+
+      .step-header h2 {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: var(--text-primary);
+      }
+
+      .step-header p {
+        color: var(--text-secondary);
+        font-size: 16px;
+        margin: 0;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-label {
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: var(--text-primary);
+        font-size: 14px;
+        display: block;
+      }
+
+      .form-control {
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 12px 16px;
+        font-size: 16px;
+        transition: all 0.2s ease;
+        background: white;
+      }
+
+      .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        outline: none;
+      }
+
+      .form-control::placeholder {
+        color: var(--text-muted);
+      }
+
+      .btn-primary {
+        background: var(--primary-color);
+        border: 1px solid var(--primary-color);
+        border-radius: 8px;
+        padding: 12px 24px;
+        font-weight: 600;
+        font-size: 16px;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .btn-primary:hover {
+        background: var(--primary-hover);
+        border-color: var(--primary-hover);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+      }
+
+      .btn-primary:disabled {
+        opacity: 0.6;
+        transform: none;
+        box-shadow: none;
+      }
+
+      .social-divider {
+        position: relative;
+        text-align: center;
+        margin: 2rem 0;
+      }
+
+      .social-divider::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: var(--border-color);
+      }
+
+      .social-divider span {
+        background: white;
+        padding: 0 16px;
+        color: var(--text-secondary);
+        font-size: 14px;
+      }
+
+      .social-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 2rem;
+      }
+
+      .btn-social {
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 12px 16px;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        font-weight: 500;
+        color: var(--text-primary);
+        text-decoration: none;
+        transition: all 0.2s ease;
+      }
+
+      .btn-social:hover {
+        background: var(--bg-light);
+        border-color: var(--text-muted);
+        color: var(--text-primary);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .step {
+        display: none;
+      }
+
+      .step.active {
+        display: block;
+        animation: fadeIn 0.4s ease-in-out;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .verification-code {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        margin: 2rem 0;
+      }
+
+      .code-input {
+        width: 56px;
+        height: 56px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 600;
+        border: 2px solid var(--border-color);
+        border-radius: 8px;
+        background: white;
+      }
+
+      .code-input:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+      }
+
+      .team-invite-input {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      .team-invite-input input {
+        flex: 1;
+      }
+
+      .btn-outline {
+        border: 1px solid var(--border-color);
+        background: white;
+        color: var(--text-primary);
+      }
+
+      .btn-outline:hover {
+        background: var(--bg-light);
+      }
+
+      @media (max-width: 991.98px) {
+        .sidebar {
+          display: none;
+        }
+        
+        .main-content {
+          padding: 1rem;
+        }
+        
+        .progress-dots {
+          display: flex;
+        }
+      }
+
+      @media (min-width: 992px) {
+        .progress-dots {
+          display: none;
+        }
+      }
+
+      .success-icon {
+        width: 64px;
+        height: 64px;
+        background: var(--primary-light);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 2rem;
+        color: var(--primary-color);
+        font-size: 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="onboarding-container">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div class="logo">
+          <div class="logo-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+              <rect x="3" y="3" width="7" height="7" rx="1"/>
+              <rect x="14" y="3" width="7" height="7" rx="1"/>
+              <rect x="3" y="14" width="7" height="7" rx="1"/>
+              <rect x="14" y="14" width="7" height="7" rx="1"/>
+            </svg>
+          </div>
+          <span class="fw-bold fs-5">OnboardFlow</span>
+        </div>
+
+        <div class="step-list">
+          <div class="step-item active" data-step="1">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h6>Your details</h6>
+              <p>Provide an email and password</p>
+            </div>
+          </div>
+
+          <div class="step-item" data-step="2">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h6>Verify your email</h6>
+              <p>Enter your verification code</p>
+            </div>
+          </div>
+
+          <div class="step-item" data-step="3">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h6>Invite your team</h6>
+              <p>Start collaborating with your team</p>
+            </div>
+          </div>
+
+          <div class="step-item" data-step="4">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <h6>Welcome to OnboardFlow!</h6>
+              <p>Get up and running in 3 minutes</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-footer">
+          <button class="btn-link" id="backBtn">
+            <i class="bi bi-arrow-left me-1"></i>Back to home
+          </button>
+          <button class="btn-link" id="signInLink">Sign in</button>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <div class="form-container">
+          <!-- Progress dots for mobile -->
+          <div class="progress-dots">
+            <div class="progress-dot active"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+          </div>
+
+          <!-- Step 1: Account Details -->
+          <div class="step active" id="step1">
+            <div class="step-header">
+              <h2>Create a free account</h2>
+              <p>Provide your email and choose a password.</p>
+            </div>
+
+            <form id="step1Form">
+              <div class="form-group">
+                <label for="email" class="form-label">Email*</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  placeholder="Enter your email"
+                  required
+                />
+                <div class="invalid-feedback"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="password" class="form-label">Password*</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  placeholder="Choose a password"
+                  required
+                />
+                <div class="invalid-feedback"></div>
+              </div>
+
+              <div class="social-divider">
+                <span>OR</span>
+              </div>
+
+              <div class="social-buttons">
+                <button type="button" class="btn-social" id="googleBtn">
+                  <svg width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                  </svg>
+                  Sign up with Google
+                </button>
+                
+                <button type="button" class="btn-social" id="appleBtn">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                  </svg>
+                  Sign up with Apple ID
+                </button>
+              </div>
+
+              <button type="submit" class="btn btn-primary w-100">
+                <span>Continue</span>
+                <i class="bi bi-arrow-right"></i>
+              </button>
+            </form>
+          </div>
+
+          <!-- Step 2: Email Verification -->
+          <div class="step" id="step2">
+            <div class="step-header">
+              <h2>Check your email</h2>
+              <p>We sent a verification code to <strong id="userEmail">your email</strong></p>
+            </div>
+
+            <form id="step2Form">
+              <div class="verification-code">
+                <input type="text" class="form-control code-input" maxlength="1" data-index="0">
+                <input type="text" class="form-control code-input" maxlength="1" data-index="1">
+                <input type="text" class="form-control code-input" maxlength="1" data-index="2">
+                <input type="text" class="form-control code-input" maxlength="1" data-index="3">
+                <input type="text" class="form-control code-input" maxlength="1" data-index="4">
+                <input type="text" class="form-control code-input" maxlength="1" data-index="5">
+              </div>
+
+              <div class="text-center mb-3">
+                <p class="text-muted mb-2">Didn't receive the email?</p>
+                <button type="button" class="btn-link" id="resendCode">
+                  Click to resend
+                </button>
+              </div>
+
+              <button type="submit" class="btn btn-primary w-100">
+                <span>Verify email</span>
+                <i class="bi bi-arrow-right"></i>
+              </button>
+            </form>
+          </div>
+
+          <!-- Step 3: Team Invitation -->
+          <div class="step" id="step3">
+            <div class="step-header">
+              <h2>Invite your team</h2>
+              <p>Collaborate with your teammates right from the start</p>
+            </div>
+
+            <form id="step3Form">
+              <div id="inviteList">
+                <div class="team-invite-input">
+                  <input
+                    type="email"
+                    class="form-control"
+                    placeholder="teammate@company.com"
+                  >
+                  <button type="button" class="btn btn-outline" onclick="removeInvite(this)">
+                    <i class="bi bi-x"></i>
+                  </button>
+                </div>
+              </div>
+
+              <button type="button" class="btn btn-outline w-100 mb-3" id="addMoreBtn">
+                <i class="bi bi-plus"></i>
+                Add another
+              </button>
+
+              <div class="d-flex gap-3">
+                <button type="button" class="btn btn-outline flex-fill" id="skipInvite">
+                  Skip for now
+                </button>
+                <button type="submit" class="btn btn-primary flex-fill">
+                  <span>Send invites</span>
+                  <i class="bi bi-arrow-right"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Step 4: Welcome -->
+          <div class="step" id="step4">
+            <div class="step-header">
+              <div class="success-icon">
+                <i class="bi bi-check-lg"></i>
+              </div>
+              <h2>Welcome to OnboardFlow!</h2>
+              <p>You're all set! Start exploring and building amazing experiences.</p>
+            </div>
+
+            <div class="text-center">
+              <button type="button" class="btn btn-primary" id="getStartedBtn">
+                <span>Get started</span>
+                <i class="bi bi-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+      class OnboardingFlow {
+        constructor() {
+          this.currentStep = 1;
+          this.totalSteps = 4;
+          this.userData = {};
+          this.init();
+        }
+
+        init() {
+          this.setupEventListeners();
+          this.updateUI();
+        }
+
+        setupEventListeners() {
+          // Step 1 - Account creation
+          document.getElementById('step1Form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.handleStep1();
+          });
+
+          // Step 2 - Email verification
+          document.getElementById('step2Form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.handleStep2();
+          });
+
+          // Step 3 - Team invitation
+          document.getElementById('step3Form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.handleStep3();
+          });
+
+          // Verification code inputs
+          const codeInputs = document.querySelectorAll('.code-input');
+          codeInputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+              if (e.target.value.length === 1 && index < codeInputs.length - 1) {
+                codeInputs[index + 1].focus();
+              }
+            });
+            
+            input.addEventListener('keydown', (e) => {
+              if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                codeInputs[index - 1].focus();
+              }
+            });
+          });
+
+          // Team invitation
+          document.getElementById('addMoreBtn').addEventListener('click', () => {
+            this.addInviteField();
+          });
+
+          document.getElementById('skipInvite').addEventListener('click', () => {
+            this.nextStep();
+          });
+
+          // Final step
+          document.getElementById('getStartedBtn').addEventListener('click', () => {
+            // Redirect to dashboard or main app
+            console.log('Redirecting to dashboard...');
+          });
+
+          // Social login
+          document.getElementById('googleBtn').addEventListener('click', () => {
+            this.handleSocialLogin('google');
+          });
+
+          document.getElementById('appleBtn').addEventListener('click', () => {
+            this.handleSocialLogin('apple');
+          });
+
+          // Navigation
+          document.getElementById('signInLink').addEventListener('click', () => {
+            window.location.href = 'login.html';
+          });
+
+          document.getElementById('backBtn').addEventListener('click', () => {
+            window.history.back();
+          });
+
+          document.getElementById('resendCode').addEventListener('click', () => {
+            this.resendVerificationCode();
+          });
+        }
+
+        handleStep1() {
+          const email = document.getElementById('email').value;
+          const password = document.getElementById('password').value;
+
+          if (!this.validateEmail(email)) {
+            this.showFieldError('email', 'Please enter a valid email address');
+            return;
+          }
+
+          if (!this.validatePassword(password)) {
+            this.showFieldError('password', 'Password must be at least 8 characters long');
+            return;
+          }
+
+          this.userData.email = email;
+          this.userData.password = password;
+          
+          // Update email in step 2
+          document.getElementById('userEmail').textContent = email;
+          
+          this.nextStep();
+        }
+
+        handleStep2() {
+          const codeInputs = document.querySelectorAll('.code-input');
+          const code = Array.from(codeInputs).map(input => input.value).join('');
+          
+          if (code.length !== 6) {
+            // Highlight empty fields
+            codeInputs.forEach(input => {
+              if (!input.value) {
+                input.style.borderColor = '#ef4444';
+              }
+            });
+            return;
+          }
+
+          this.userData.verificationCode = code;
+          this.nextStep();
+        }
+
+        handleStep3() {
+          const inviteInputs = document.querySelectorAll('#inviteList input[type="email"]');
+          const invites = Array.from(inviteInputs)
+            .map(input => input.value.trim())
+            .filter(email => email && this.validateEmail(email));
+
+          this.userData.teamInvites = invites;
+          this.nextStep();
+        }
+
+        handleSocialLogin(provider) {
+          console.log(`Social login with ${provider}`);
+          // Skip to step 3 for social login
+          this.currentStep = 3;
+          this.updateUI();
+        }
+
+        nextStep() {
+          if (this.currentStep < this.totalSteps) {
+            this.currentStep++;
+            this.updateUI();
+          }
+        }
+
+        prevStep() {
+          if (this.currentStep > 1) {
+            this.currentStep--;
+            this.updateUI();
+          }
+        }
+
+        updateUI() {
+          // Update steps
+          document.querySelectorAll('.step').forEach((step, index) => {
+            step.classList.toggle('active', index + 1 === this.currentStep);
+          });
+
+          // Update sidebar
+          document.querySelectorAll('.step-item').forEach((item, index) => {
+            const stepNumber = index + 1;
+            item.classList.remove('active', 'completed');
+            
+            if (stepNumber === this.currentStep) {
+              item.classList.add('active');
+            } else if (stepNumber < this.currentStep) {
+              item.classList.add('completed');
+              const numberEl = item.querySelector('.step-number');
+              numberEl.innerHTML = '<i class="bi bi-check" style="font-size: 12px;"></i>';
+            }
+          });
+
+          // Update progress dots
+          document.querySelectorAll('.progress-dot').forEach((dot, index) => {
+            dot.classList.remove('active', 'completed');
+            
+            if (index + 1 === this.currentStep) {
+              dot.classList.add('active');
+            } else if (index + 1 < this.currentStep) {
+              dot.classList.add('completed');
+            }
+          });
+        }
+
+        addInviteField() {
+          const inviteList = document.getElementById('inviteList');
+          const newField = document.createElement('div');
+          newField.className = 'team-invite-input';
+          newField.innerHTML = `
+            <input
+              type="email"
+              class="form-control"
+              placeholder="teammate@company.com"
+            >
+            <button type="button" class="btn btn-outline" onclick="removeInvite(this)">
+              <i class="bi bi-x"></i>
+            </button>
+          `;
+          inviteList.appendChild(newField);
+          newField.querySelector('input').focus();
+        }
+
+        validateEmail(email) {
+          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        validatePassword(password) {
+          return password.length >= 8;
+        }
+
+        showFieldError(fieldId, message) {
+          const field = document.getElementById(fieldId);
+          const feedback = field.parentNode.querySelector('.invalid-feedback');
+          field.classList.add('is-invalid');
+          if (feedback) {
+            feedback.textContent = message;
+          }
+          
+          // Clear error on input
+          field.addEventListener('input', () => {
+            field.classList.remove('is-invalid');
+          }, { once: true });
+        }
+
+        resendVerificationCode() {
+          const btn = document.getElementById('resendCode');
+          btn.textContent = 'Code sent!';
+          btn.disabled = true;
+          
+          setTimeout(() => {
+            btn.textContent = 'Click to resend';
+            btn.disabled = false;
+          }, 3000);
+        }
+      }
+
+      // Global function for removing invite fields
+      function removeInvite(btn) {
+        const inviteList = document.getElementById('inviteList');
+        if (inviteList.children.length > 1) {
+          btn.parentNode.remove();
+        }
+      }
+
+      // Initialize the onboarding flow
+      document.addEventListener('DOMContentLoaded', () => {
+        new OnboardingFlow();
+      });
+    </script>
+  </body>
+</html>
